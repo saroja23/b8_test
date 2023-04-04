@@ -1,0 +1,101 @@
+{% load static %}
+<html>
+    <head>
+        <title>Welcometo Library</title>
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    </head>
+<style>
+    .required:before {
+        content: " *";
+        color: red;
+    }
+</style>
+
+
+    <body>
+        <h2>Library Application</h2><hr>
+        
+        <form action="{% url 'home_page' %}" method="post">
+            {% csrf_token %}
+            
+            {% if single_book %}
+            <label class="required">Book ID:-</label>
+                <input type="text" name="book_id" value="{{single_book.id}}"readonly><br><br>
+            {% endif %}
+
+            <label class="required">Name:-</label>
+                <input type="text" name="book_name" value="{{single_book.name}}"><br><br>
+            <label class="required">Quantity:- </label>
+                <input type="number" name="book_qty" value="{{single_book.qty}}"><br><br>
+            <label class="required">Price:- </label>
+                 <input type="number" name="book_price" value="{{single_book.price}}"><br><br>
+            <label class="required">Author:- </label>
+                <input type="text" name="book_author" value="{{single_book.author}}"><br><br>
+
+            <label class="required">Is_published:- </label>
+
+            {% if single_book %}
+                {% if single_book.is_published == True %}
+                 Yes <input type="radio" name="book_is_publish" value="Yes" checked> No <input type="radio" name="book_is_publish" value="No"><br><br>
+                {% else %}
+                     Yes <input type="radio" name="book_is_publish" value="Yes"> No <input type="radio" name="book_is_publish" value="No" checked><br><br>
+                {% endif%}
+            {% else %}
+                Yes <input type="radio" name="book_is_publish" value="Yes"> No <input type="radio" name="book_is_publish" value="No"><br><br>
+            {% endif %}
+
+            <input type="submit" class="btn btn-primary" value="submit"><br>
+            
+            <!-- New One For Dropdown Menu  -->
+            <!-- <label>Choose a car:</label>
+                <select name="cars" multiple>
+                    <option>Select</option>
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Volvo</option>
+                </select> -->
+            <!-- {% for book in all_books %}
+                {{book.id}} -- {{book.name}} -- {{book.price}}<br>
+            {%endfor %} -->
+        </form>
+    <!-- <a href="/books/">Show Books</a> -->
+    <a href="{% url 'all_active_books' %}" class="btn btn-success">Show Active Books</a>
+    <a href="{% url 'all_inactive_books' %}" class="btn btn-danger">Show In-Active Books</a><br>
+
+    <a href="{% url 'create_csv' %}" class="btn btn-info">Create Csv</a><br>
+    <a href="{% url 'create_excel_active_books' %}" class="btn btn-info">Create Excel Active Books</a><br>
+    <a href="{% url 'create_excel_inactive_books' %}" class="btn btn-info">Create Excel Inactive Books</a><br>
+    
+    <form action="{% url 'upload_csv' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="csv_file">
+        <input type="submit" class="btn btn-primary" value="Upload Csv"><br>
+    </form>
+
+    <form action="{% url 'read_text' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="text_file">
+        <input type="submit" class="btn btn-primary" value="Read">
+    </form>
+
+    <form action="{% url 'download_csv' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Download">
+    </form>
+
+    <form action="{% url 'book_duplicate' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Book dup"><br>
+
+    </form>
+
+    <form action="{% url 'create_csv_raw' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-primary" value="Upload Csv Raw"><br>
+    </form>
+    <a href="{% url 'LogoutView' %}" class="btn btn-primary">Logout</a><br>
+
+
+    </body>
+<html>

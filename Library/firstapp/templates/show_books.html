@@ -1,0 +1,81 @@
+{% load static %}
+
+<html>
+
+    <head>
+            <title>Book Details</title>
+            <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    </head>
+    <style>
+        table, th, td {
+            border:1px solid black;
+        }
+    </style>
+    <body>
+    {% if books %}
+    <table>
+        <!-- class="table table-striped" -->
+    <tr>
+        <th>Book ID</th>
+        <th>Book Name</th>
+        <th>Book Qty</th>
+        <th>Book Price</th>
+        <th>Book Author</th>
+        <th>Book Published</th>
+        <th>Actions</th>
+    <tr>
+    {% for book in books %}
+        <tr>
+            <td>{{book.id}}</td>
+            <td>{{book.name}}</td>
+            <td>{{book.qty}}</td>
+            <td>{{book.price}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.is_published}}</td>
+            <td>
+                {% if not inactive %}
+
+                <form action="{% url 'update_book' book.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Update">
+                </form>
+
+                <form action="{% url 'soft_delete_book' book.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Soft Delete">
+                </form>
+
+                {% endif %}
+                
+                {% if not active %}
+                <form action="{% url 'restore_books' book.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-success" value="Restore">
+                </form>
+
+                {% endif %}
+
+                <form action="{% url 'delete_book' book.id %}"  method="POST">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Hard Delete">
+                </form>                
+                
+            </td>
+        </tr>   
+    {% endfor %}  
+    </table> <br>
+    {% else %}
+        <h2>NO RECORD FOUND</h2>
+    {% endif %} 
+    <a href="{% url 'home_page' %}" class="btn btn-info">Home Page</a>
+
+    {% if not inactive %}
+    <a href="{% url 'all_inactive_books' %}" class="btn btn-danger">Show In-Active Books</a>
+    {% endif %}
+
+    {% if not active %}
+    <a href="{% url 'all_active_books' %}" class="btn btn-success">Show Active Books</a>
+    {% endif %}
+    <p class="text-center"> If you already have an account, <a href="{% url 'LogoutView' %}">logout</a> instead.</p>
+    </body>
+</html>

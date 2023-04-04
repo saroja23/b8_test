@@ -1,0 +1,7 @@
+name,qty,price,author,is_published,is_active
+Book10,2,500,gnhn,TRUE,TRUE
+Book20,6,300,gkfkf,TRUE,FALSE
+Book40,5,544,klmn,FALSE,FALSE
+Book60,2,985,lkio,FALSE,FALSE
+Book70,9,236,gsd,FALSE,TRUE
+Book80,6,574,aikj,TRUE,TRUE

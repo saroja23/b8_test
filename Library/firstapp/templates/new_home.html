@@ -1,0 +1,38 @@
+{% load static %}
+<html>
+    <head>
+        <title>Welcometo Library</title>
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    </head>
+<style>
+    .required:before {
+        content: " *";
+        color: red;
+    }
+</style>
+
+
+    <body>
+        <h2>Library Application</h2><hr>
+        <form>
+            <div class="form-group">
+              <label >Email address</label>
+              <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+              <small  class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label >Password</label>
+              <input type="password" class="form-control"  placeholder="Password">
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" >Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        
+    <a href="{% url 'all_active_books' %}" class="btn btn-success">Show Active Books</a>
+    <a href="{% url 'all_inactive_books' %}" class="btn btn-danger">Show In-Active Books</a>
+
+    </body>
+<html>
